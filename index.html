@@ -1,35 +1,4 @@
-<script src="https://alcdn.msauth.net/browser/2.38.1/js/msal-browser.min.js"></script>
-
-<script>
-const msalConfig = {
-    auth: {
-        clientId: "1845b1bd-3d37-4905-a3ad-d6a8a069a2b5",
-        authority: "https://login.microsoftonline.com/common",
-        redirectUri: "https://zealous-island-0cf587910.7.azurestaticapps.net"
-    }
-};
-
-const msalInstance = new msal.PublicClientApplication(msalConfig);
-
-let currentUser = null;
-
-async function login() {
-    try {
-        const response = await msalInstance.loginPopup({
-            scopes: ["User.Read"]
-        });
-
-        currentUser = response.account;
-
-        alert("Logged in as: " + currentUser.username);
-
-    } catch (error) {
-        console.error(error);
-        alert("Login failed");
-    }
-}
-</script>
-``<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -215,8 +184,6 @@ const IC={
   del:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'
 };
 const ADMIN_PIN="9999";
-    <!-- existing PIN inputs -->
-</div>
 const DEPTS={
   Engineer:{ic:"engineer",pin:"1111",partner:"Customer name(s)",partnerWord:"Customers",
     names:["Umang Gohel","Kashyap Mistry","Manish Mewada","Sachin Joshi","Mihir Panchal","Mihir Mistry","Fenil Sabhaya","Ronak Panchal"],
@@ -492,7 +459,6 @@ $("hamb").onclick=()=>{$("sidebar").classList.add("open");$("scrim").classList.a
 $("scrim").onclick=closeSidebar;
 function closeSidebar(){$("sidebar").classList.remove("open");$("scrim").classList.remove("show");}
 buildNav();render();
-  
 </script>
 </body>
 </html>
