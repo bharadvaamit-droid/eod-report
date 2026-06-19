@@ -1,32 +1,4 @@
-(IMPORTANT: don’t miss `... src="https://alcdn.msauth.net/browser/2.38.1/js/msal-browser.min.js">
-
-const msalConfig = {
-    auth: {
-        clientId: "1845b1bd-3d37-4905-a3ad-d6a8a069a2b5",
-        authority: "https://login.microsoftonline.com/common",
-        redirectUri: "https://zealous-island-0cf587910.7.azurestaticapps.net"
-    }
-};
-
-const msalInstance = new msal.PublicClientApplication(msalConfig);
-
-let currentUser = null;
-
-async function login() {
-    try {
-        const response = await msalInstance.loginPopup({
-            scopes: ["User.Read"]
-        });
-
-        currentUser = response.account;
-
-        alert("Logged in as: " + currentUser.username);
-
-    } catch (error) {
-        console.error(error);
-        alert("Login failed");
-    }
-}<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
