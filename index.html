@@ -399,10 +399,10 @@ const NAVY="#284A77",GREEN="#74B12C";
 function renderCharts(rows){
   if(rows.length===0){$("ad_body").innerHTML=emptyHTML();return;}
   const df=$("ad_dept").value;
-  const byDay={};rows.forEach(r=>byDay[r.date]=(byDay[r.date]||0)+1);
-  const lineData=Object.keys(byDay).sort().map(d=>({label:d.slice(5),value:byDay[d]}));
-  const byDept={};rows.forEach(r=>byDept[r.department]=(byDept[r.department]||0)+1);
-  const barData=Object.keys(byDept).map(k=>({label:k,value:byDept[k]}));
+   byDay={};rows.forEach(r=>byDay[r.date]=(byDay[r.date]||0)+1);
+   lineData=Object.keys(byDay).sort().map(d=>({label:d.slice(5),value:byDay[d]}));
+   byDept={};rows.forEach(r=>byDept[r.department]=(byDept[r.department]||0)+1);
+   barData=Object.keys(byDept).map(k=>({label:k,value:byDept[k]}));
   const byPerson={};rows.forEach(r=>byPerson[r.name]=(byPerson[r.name]||0)+1);
   const personData=Object.entries(byPerson).map(([k,v])=>({label:k,value:v})).sort((a,b)=>b.value-a.value).slice(0,10);
   const kpiData=Object.keys(byDept).map(dep=>({label:dep,value:computeKPI(dep,rows.filter(r=>r.department===dep))}));
@@ -474,7 +474,25 @@ function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");set
 $("hamb").onclick=()=>{$("sidebar").classList.add("open");$("scrim").classList.add("show");};
 $("scrim").onclick=closeSidebar;
 function closeSidebar(){$("sidebar").classList.remove("open");$("scrim").classList.remove("show");}
-buildNav();render();
+buildNav();
+
+async function loadReportsFromAPI() {
+    try {
+        const response = await fetch('https://eod-api-ckeqf8c6ajc9f6fh.centralindia-01.azurewebsites.net/api/getReports');
+        const data = await response.json();
+
+        // overwrite existing reports
+        reports = data;
+
+        render(); // refresh UI
+
+    } catch (err) {
+        console.error("API error:", err);
+    }
+}
+
+loadReportsFromAPI();
+
 </script>
 </body>
 </html>
