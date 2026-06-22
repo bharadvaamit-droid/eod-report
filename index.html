@@ -460,7 +460,8 @@ async function submitReport(rec){
 
     return true;
 }
-function seedData(){const base=new Date();
+function seedData(){
+    return; // ✅ STOP dummy data completelyconst base=new Date();
   const mk=(dep,nm,c,daysAgo)=>{const dt=new Date(base);dt.setDate(dt.getDate()-daysAgo);return{id:_idseq++,department:dep,name:nm,date:dt.toISOString().split("T")[0],location:Math.random()>.5?"Site":"Office",partner:"ABC Pharma",hours:7+Math.floor(Math.random()*3),counts:c,tasks:[],mom:"Yes",blocker:"None",submittedAt:new Date().toISOString()};};
   for(let day=0;day<5;day++){
     reports.push(mk("Engineer","Umang Gohel",{"Completed tasks":4+Math.floor(Math.random()*4),"Tasks in progress":1+Math.floor(Math.random()*2),"Tasks pending":Math.floor(Math.random()*3),"Customers supported":1+Math.floor(Math.random()*2)},day));
@@ -476,22 +477,25 @@ $("scrim").onclick=closeSidebar;
 function closeSidebar(){$("sidebar").classList.remove("open");$("scrim").classList.remove("show");}
 buildNav();
 
-async function loadReportsFromAPI() {
+async function loadReports() {
     try {
-        const response = await fetch('https://eod-api-ckeqf8c6ajc9f6fh.centralindia-01.azurewebsites.net/api/getReports');
-        const data = await response.json();
+        const res = await fetch('https://eod-api-ckeqf8c6ajc9f6fh.centralindia-01.azurewebsites.net/api/getReports');
+        const data = await res.json();
 
-        // overwrite existing reports
-        reports = data;
+        console.log("DB DATA:", data);
 
-        render(); // refresh UI
+        // ⭐ THIS IS THE FIX
+        reports.length = 0;
+        data.forEach(r => reports.push(r));
+
+        render();
 
     } catch (err) {
-        console.error("API error:", err);
+        console.log("API ERROR:", err);
     }
 }
 
-loadReportsFromAPI();
+loadReports();
 
 </script>
 </body>
