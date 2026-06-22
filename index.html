@@ -443,18 +443,7 @@ function computeKPI(dep,rr){const sum=m=>rr.reduce((s,r)=>s+(+(r.counts[m]||0)),
   else if(dep==="Dispatch"){const a=sum("Dispatches completed"),b=sum("Pending dispatches");num=a;den=a+b;}
   else if(dep==="Account"){const p=sum("Payments received"),pp=sum("Payments pending");num=p;den=p+pp;}
   return den?Math.round(num/den*100):0;}
-async function submitReport(rec){
-
-    await fetch('https://eod-api-ckeqf8c6ajc9f6fh.centralindia-01.azurewebsites.net/api/HttpTrigger1
-``', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(rec)
-    });
-
-    return true;
-}
-
+async function submitReport(rec){reports.push(rec);await new Promise(r=>setTimeout(r,350));return true;}
 function seedData(){const base=new Date();
   const mk=(dep,nm,c,daysAgo)=>{const dt=new Date(base);dt.setDate(dt.getDate()-daysAgo);return{id:_idseq++,department:dep,name:nm,date:dt.toISOString().split("T")[0],location:Math.random()>.5?"Site":"Office",partner:"ABC Pharma",hours:7+Math.floor(Math.random()*3),counts:c,tasks:[],mom:"Yes",blocker:"None",submittedAt:new Date().toISOString()};};
   for(let day=0;day<5;day++){
